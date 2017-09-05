@@ -13,6 +13,24 @@ use Illuminate\Support\Facades\Redirect;
 |
 */
 
+
+Route::get('planilla',function(){
+	$view =  \View::make('disciplinarios.plantillaspdf.renuncia_tacita',[
+			'dia'=>date('d'),
+			'mes'=>date('M'),
+			'anio'=>date('Y'),
+			'nombre'=>'nombre',
+			'diarenuncia'=>'diarenuncia',
+			'mesrenuncia'=>'mesrenuncia',
+			'aniorenuncia'=>'aniorenuncia',
+	])->render();
+	$pdf = \App::make('dompdf.wrapper');
+	$pdf->loadHTML($view);
+	return $pdf->stream('invoice2');
+});
+
+
+
 Route::resource('log','LogController');
 
 Route::get('logout','LogController@logOut');

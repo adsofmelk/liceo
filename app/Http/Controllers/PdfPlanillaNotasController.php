@@ -11,10 +11,13 @@ class PdfPlanillaNotasController extends PdfTemplateLanscapeLetterController
 	
     public function planillaNotas($datos){
     	
+    	
+    	
     	$this->cabeceraPlanilla($datos['cabecera']);
     	
     	
     	$this->cabeceraTabla();
+    	
     	
     	$this->pdf::setXY(10,48);
     	$this->pdf::SetFont('Arial','',9);
@@ -28,9 +31,9 @@ class PdfPlanillaNotasController extends PdfTemplateLanscapeLetterController
     	
     	///DATOS FINAL DE PLANILLA
     	
-    	$this->datosFinalPlanilla($datos['cabecera'][0]->nombres. " " . $datos['cabecera'][0]->apellidos);
+    	//$this->datosFinalPlanilla($datos['cabecera'][0]->nombres. " " . $datos['cabecera'][0]->apellidos);
     	
-    	$this->imprimirEstadisticas($datos);
+    	//$this->imprimirEstadisticas($datos);
     	
 	}
 	
@@ -49,11 +52,11 @@ class PdfPlanillaNotasController extends PdfTemplateLanscapeLetterController
 		$this->pdf::setXY($x,$y);
 		
 		$this->pdf::SetFont('Arial','B',9);
-		$this->pdf::Cell(60, 5,\App\Helpers::utf("FANNY EDILMA RIAÑO PEDRAZA"), 0, 0, "C"); //DATOS COORDINADOR
+		$this->pdf::Cell(60, 5,\App\Helpers::utf("_____________________"), 0, 0, "C"); //DATOS COORDINADOR
 		
 		$this->pdf::setXY($x,$y+5);
 		$this->pdf::SetFont('Arial','',8);
-		$this->pdf::Cell(60, 5,\App\Helpers::utf("Coordinadora General"), 0, 0, "C");
+		$this->pdf::Cell(60, 5,\App\Helpers::utf("Coordinador General"), 0, 0, "C");
 		
 		$x+=80;
 		
@@ -116,7 +119,7 @@ class PdfPlanillaNotasController extends PdfTemplateLanscapeLetterController
 		
 		$this->pdf::setX($this->pdf::getX()+1); //ESPACION EN BLANCO
 		for($i = 1; $i<=4;$i++){
-			$this->pdf::Cell(6, $h,(isset($row['fallas'.$i.'p'])?$row['fallas'.$i.'p']:''),1 , 0, "C"); //Fallas 1P
+			$this->pdf::Cell(6, $h,((sizeof($row['fallas'.$i.'p'])>0)?$row['fallas'.$i.'p']:''),1 , 0, "C"); //Fallas 1P
 		}
 		
 		
@@ -134,26 +137,26 @@ class PdfPlanillaNotasController extends PdfTemplateLanscapeLetterController
 		
 		
 		
-		$this->pdf::Cell(10, $h,(sizeof($row['DF Cognitivo'])>0?number_format($row['DF Cognitivo'][0]->promedio,2):''),1 , 0, "L",1); //COGMITIGO
+		$this->pdf::Cell(10, $h,(sizeof($row['Cognitivo'])>0?number_format($row['Cognitivo'][0]->promedio,2):''),1 , 0, "L",1); //COGMITIGO
 		
-		$this->pdf::Cell(10, $h,(sizeof($row['DF Procedimental'])>0?number_format($row['DF Procedimental'][0]->promedio,2):''),1 , 0, "L",1); //PROCEDIMENTAL
+		$this->pdf::Cell(10, $h,(sizeof($row['Procedimental'])>0?number_format($row['Procedimental'][0]->promedio,2):''),1 , 0, "L",1); //PROCEDIMENTAL
 		
-		$this->pdf::Cell(10, $h,(sizeof($row['DF Actitudinal'])>0?number_format($row['DF Actitudinal'][0]->promedio,2):''),1 , 0, "L",1); //ACTITUDINAL
+		$this->pdf::Cell(10, $h,(sizeof($row['Actitudinal'])>0?number_format($row['Actitudinal'][0]->promedio,2):''),1 , 0, "L",1); //ACTITUDINAL
 		
-		
-		$this->pdf::setX($this->pdf::getX()+2); //DOBLE ESPACION EN BLANCO
-		
-		$this->pdf::Cell(10, $h,(sizeof($row['Preparatorio'])>0?number_format($row['Preparatorio'][0]->promedio,2):''),1 , 0, "L"); //PREPARATORIO
-		
-		$this->pdf::Cell(10, $h,(sizeof($row['Examen Asignatura'])>0?number_format($row['Examen Asignatura'][0]->promedio,2):''),1 , 0, "L"); //FINAL ASIGNATURA
-		
-		if(sizeof($row['Examen 4° Periodo'])>0){
-			$this->pdf::Cell(10, $h,number_format($row['Examen 4° Periodo'][0]->promedio,2),1 , 0, "L"); //EXAMEN 4P
-		}
-		
-		$this->pdf::Cell(10, $h,(sizeof($row['Examen Final'])>0?number_format($row['Examen Final'][0]->promedio,2):''),1 , 0, "L"); //EXAMEN FINAL
 		
 		$this->pdf::setX($this->pdf::getX()+2); //DOBLE ESPACION EN BLANCO
+		
+		//$this->pdf::Cell(10, $h,(sizeof($row['Preparatorio'])>0?number_format($row['Preparatorio'][0]->promedio,2):''),1 , 0, "L"); //PREPARATORIO
+		
+		//$this->pdf::Cell(10, $h,(sizeof($row['Examen Asignatura'])>0?number_format($row['Examen Asignatura'][0]->promedio,2):''),1 , 0, "L"); //FINAL ASIGNATURA
+		
+		//if(sizeof($row['Examen 4° Periodo'])>0){
+		//	$this->pdf::Cell(10, $h,number_format($row['Examen 4° Periodo'][0]->promedio,2),1 , 0, "L"); //EXAMEN 4P
+		//}
+		
+		//$this->pdf::Cell(10, $h,(sizeof($row['Examen Final'])>0?number_format($row['Examen Final'][0]->promedio,2):''),1 , 0, "L"); //EXAMEN FINAL
+		
+		//$this->pdf::setX($this->pdf::getX()+2); //DOBLE ESPACION EN BLANCO
 		
 		$this->pdf::Cell(10, $h,(isset($row['nf'])?$row['nf']:''),1 , 0, "C",1); //NOTA FINAL
 		
@@ -260,22 +263,7 @@ class PdfPlanillaNotasController extends PdfTemplateLanscapeLetterController
 
 		}
 		
-		//EVALUACIONES FINALES
-		$componentes = ['Preparator',
-						'Final Asig', 
-						//'Exam 4 pe',  ///EXAMEN 4 periodo
-						'Exam final'];
-		///NOTAS
-		$x+=2;
-		foreach ($componentes as $componente){
-			$x+=10;
-			
-			$this->pdf::setXY($x,$y+15);
-			$this->Rotate(90);
-			$this->pdf::Cell( 15, 10,$componente ,1 , 0, "L");
-			$this->Rotate(0);
-		}
-		
+				
 		$x+=12;
 		$this->pdf::SetFont('Arial','B',10);
 		$this->pdf::setXY($x,$y+15);

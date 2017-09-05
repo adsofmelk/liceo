@@ -160,7 +160,7 @@ class UsuarioController extends Controller
             		'telefono'=>$request['telefono'],
             		'celular'=>$request['celular'],
             		'email'=>$request['email'],
-            		'genero_idgenero'=>$request['idgenero'],
+            		'genero_idgenero'=>$request['genero_idgenero'],
             		'tipodocumento_idtipodocumento'=>$request['tipodocumento'],
             		'ciudad_documento_idciudad'=>1,
             		'gruposanguineo_idgruposanguineo'=>1,

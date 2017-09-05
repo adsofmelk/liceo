@@ -39,9 +39,9 @@ class PdfTemplateLanscapeLetterController extends Controller
 	public function Header($linewidth = 279,$lineheight=10){
 		$x = 25;
 		
-		$this->pdf::Image('images/logo.png',10,8,10);
-		$this->pdf::Image('images/logo.jpg',252,10,15);
-		
+		//$this->pdf::Image('images/logo.png',10,8,10);
+		$this->pdf::Image('images/logo.jpg',12,8,20);
+		/*
 		$this->pdf::SetXY($x, 10);
 		$this->pdf::SetFont('Arial','B',12);
 		$this->pdf::Cell(120, $lineheight, Helpers::utf("DIOCESIS DE GIRARDOT"), 0, 0, "l");
@@ -50,21 +50,21 @@ class PdfTemplateLanscapeLetterController extends Controller
 		$this->pdf::SetFont('Arial','',9);
 		$this->pdf::Cell(120, $lineheight,Helpers::utf("FAMILIA DIOCESANA \"HACIA UNA COMUNIDAD DE COMUNIDADES\""), 0, 0, "l");
 		
+		*/
+		
+		$this->pdf::SetXY($x+45, 10);
+		$this->pdf::SetFont('Arial','B',12);
+		$this->pdf::Cell(140, $lineheight,Helpers::utf("LICEO CAMPESTRE LA MESA"), 0, 0, "C");
 		
 		
-		$this->pdf::SetXY($x+105, 10);
-		$this->pdf::SetFont('Arial','B',11);
-		$this->pdf::Cell(140, $lineheight,Helpers::utf("COLEGIO PARROQUIAL INTEGRADO SANTA CRUZ"), 0, 0, "C");
+		$this->pdf::SetXY($x + 45, 15);
+		$this->pdf::SetFont('Arial','',10);
+		$this->pdf::Cell(140, $lineheight,Helpers::utf("EDUCANDO EN VALORES ESTAMOS CONSTRUYENDO UNA SOCIEDAN EN PÁZ"), 0, 0, "C");
 		
 		
-		$this->pdf::SetXY($x + 105, 15);
-		$this->pdf::SetFont('Arial','B',10);
-		$this->pdf::Cell(140, $lineheight,Helpers::utf("2017 \"FAMILIA: SÉ FRATERNA, VIVE EN COMUNIÓN\""), 0, 0, "C");
-		
-		
-		$this->pdf::SetXY($x + 105,20);
+		$this->pdf::SetXY($x + 45,20);
 		$this->pdf::SetFont('Arial','',8);
-		$this->pdf::Cell(140, $lineheight,Helpers::utf('Nit. 832010437-6 / RESOLUCIÓN DE APROBACIÓN 000640 VI-18/9'), 0, 0, "C");
+		$this->pdf::Cell(140, $lineheight,Helpers::utf('Nit. ............. / RESOLUCIÓN DE APROBACIÓN ...........'), 0, 0, "C");
 	
 		//$this->pdf::Line(0,28,280,28);
 		
@@ -75,11 +75,11 @@ class PdfTemplateLanscapeLetterController extends Controller
 		$x=0;
 		$this->pdf::setXY($x,190);
 		$this->pdf::SetFont('Arial','B',10);
-		$this->pdf::Cell($linewidth, $lineheight,Helpers::utf('Educamos evangelizando y evangelizamos educando'), 0, 0, "C");
+		$this->pdf::Cell($linewidth, $lineheight,Helpers::utf(''), 0, 0, "C");
 		
 		$this->pdf::setXY($x,195);
 		$this->pdf::SetFont('Arial','',8);
-		$this->pdf::Cell($linewidth, $lineheight,Helpers::utf('Carrera 3ra A # 4 - 52 Cachipay Cundunamarca / Teléfono: 311 279 6440 / E-mail: colparrosantacruz@yahoo.com'), 0, 0, "C");
+		$this->pdf::Cell($linewidth, $lineheight,Helpers::utf('La Mesa (Cundinamarca, Colombia). Calle 5B No 3-40. Teléfono (1)8472645. Email: liceocampestre@gmail.com'), 0, 0, "C");
 		
 		$this->pdf::setXY(230,193);
 		$this->pdf::SetFont('Arial','B',8);

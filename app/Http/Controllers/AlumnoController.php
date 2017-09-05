@@ -17,7 +17,8 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-    	$cursos = \App\CursoModel::all();
+    	$cursos = \App\CursoModel::where(['estado'=>true])->get();
+    	
     	foreach ($cursos as $key=>$val){
     		$cursos[$key]['alumnos'] = \App\ViewAlumnosCursoModel::where([
     						'curso_idcurso'=>$val->idcurso,

@@ -110,6 +110,7 @@
 		<div class="panel panel-default">
 		  <div class="panel-heading">Información Académica</div>
 		  <div class="panel-body">
+		  @if(sizeof($curso)>0)
 				<div class='form-group col-sm-6'>
 		    		<strong>Curso: </strong>{{$curso->nombrecurso}}
 		    	</div>
@@ -119,6 +120,7 @@
 		    	<div class='form-group col-sm-12'>
 		    		<strong>Director de curso: </strong>{{$curso->nombres . " " .$curso->apellidos}}
 		    	</div>
+		    @endif
 			</div>
 		</div>
 		

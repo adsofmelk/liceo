@@ -96,18 +96,28 @@ class PlanillaNotasController extends Controller
      */
     public function show($id)
     {
+    	///IDENTIFICAR EL CURSO
     	$profesor_curso = \App\ProfesorCursoModel::find($id);
     	
+    	
+    	
+    	///SACAR LA LISTA DE ALUMNOS
     	$datos['alumnos'] = \App\ViewAlumnosCursoModel::where(['curso_idcurso'=>$profesor_curso->curso_idcurso])
     				->get();
-
+    	
+    	
+    				
+		///DATOS DE LA CABECERA DE LA PLANLLA
     	$datos['cabecera'] = \App\ViewProfesorCursoMateriaPersonaModel::where(['profesor_idprofesor'=>$profesor_curso->profesor_idprofesor,
     																			'curso_idcurso'=>$profesor_curso->curso_idcurso,
     																			'materia_idmateria'=>$profesor_curso->materia_idmateria
     															])->get();
+    	///LISTAR LOS PERIODOS  	
     	$periodos = \App\PeriodoModel::where(['anioescolar_idanioescolar'=>\App\Helpers::getParametros()['idanioescolar']])->get();
     	
-    	$tipoestandar = \App\TipoEstandarModel::where([
+    	
+    	///OBTENER LOS ESTANDARES DEL PERIODO ACTUAL
+    	$datos['estandares']= \App\TipoEstandarModel::where([
     			'anioescolar_idanioescolar'=>\App\Helpers::getParametros()['idanioescolar'],
     			'estado'=>true,
     			'periodo_idperiodo'=>\App\Helpers::getParametros()['idperiodo'],
@@ -115,9 +125,12 @@ class PlanillaNotasController extends Controller
     	])->get();
     	
     	
+    	
+    	///POR CADA ALUMNO
 		foreach($datos['alumnos'] as $key=>$val){
 			$tempnotas = array();
 			for($i = 0; $i<sizeof($periodos); $i++){
+				
 				$datos['alumnos'][$key]['notas'.($i+1).'p'] = \App\InformeAlumnoDetalleModel::where([
 									'alumno_idalumno'=>$val->alumno_idalumno,
 									'anioescolar_idanioescolar'=>\App\Helpers::getParametros()['idanioescolar'],
@@ -132,9 +145,8 @@ class PlanillaNotasController extends Controller
 				}
 			}
 			
-			$datos['estandares']=array();
 			
-			foreach($tipoestandar as $tipokey=>$tipoval){
+			foreach($datos['estandares'] as $tipokey=>$tipoval){
 				$datos['alumnos'][$key][$tipoval->nombre]= DB::select('call getPromedioEstandar(?,?,?,?,?,?)',[
 																					$datos['alumnos'][$key]['alumno_idalumno'],
 																					$tipoval->idtipoestandar,
@@ -151,13 +163,15 @@ class PlanillaNotasController extends Controller
 			$datos['alumnos'][$key]['nf']=(sizeof($tempnotas)>0)?number_format((array_sum($tempnotas)/sizeof($tempnotas)),2):'';
 			unset($tempnotas);
 		}
-    	
+    	/// FIN POR CADA ALUMNO
 		
     	$planillanotas = new \App\Http\Controllers\PdfPlanillaNotasController($datos);
     	
     	
     	
     	return $planillanotas->planillaNotas($datos);
+    	
+		
     	
     }
     
@@ -168,7 +182,7 @@ class PlanillaNotasController extends Controller
      * @param  int  $id id del curso
      * @return \Illuminate\Http\Response
      */
-    public function planillaPuestosCurso($id){
+    public function planillaPuestosCurso(	$id){
     	//$profesor_curso = \App\ProfesorCursoModel::find($id);
     	
     	$datos['alumnos'] = \App\ViewInformeAlumnoDatosAlumnoModel::where(['curso_idcurso'=>$id])
